@@ -26,6 +26,16 @@ public class PersonagemController {
 
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<Personagem>> buscarPorUsuario(@PathVariable Long usuarioId) {
-        return ResponseEntity.ok(service.buscarFichas(usuarioId));
+        return ResponseEntity.ok(service.buscarPorUsuario(usuarioId));
+    }
+
+    @PostMapping("/{id}/ganhar-xp")
+    public ResponseEntity<Personagem> ganharXp(@PathVariable Long id, @RequestParam int xp) {
+        return ResponseEntity.ok(service.ganharXp(id, xp));
+    }
+
+    @PostMapping("/{id}/evoluir")
+    public ResponseEntity<Personagem> evoluir(@PathVariable Long id, @RequestParam String arquetipo) {
+        return ResponseEntity.ok(service.evoluirParaArquetipo(id, arquetipo));
     }
 }
