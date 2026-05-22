@@ -5,15 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class RegistroDTO {
+public class AtualizarUsuarioDTO {
 
-    @NotBlank(message = "Nome obrigatório!")
+    @NotBlank(message = "Nome é obrigatório")
     private String nomeJogador;
 
     @Email(message = "Email inválido")
-    @NotBlank(message = "Email obrigatório")
+    @NotBlank(message = "Email é obrigatório")
     private String email;
-
-    @NotBlank(message = "Senha obrigatória")
-    private String senha;
 }
