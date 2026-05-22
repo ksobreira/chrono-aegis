@@ -23,7 +23,7 @@ public class PersonagemBuilder {
         return this;
     }
 
-    public PersonagemBuilder vida(int vida){
+    public PersonagemBuilder vidaMax(int vida){
         this.personagem.setVidaMax(vida);
         return this;
     }
