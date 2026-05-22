@@ -1,4 +1,6 @@
 package com.chronoaegis.personagens_service.enums;
 
-public class CombatPosition {
+public enum CombatPosition {
+    VANGUARDA,
+    RETAGUARDA
 }
