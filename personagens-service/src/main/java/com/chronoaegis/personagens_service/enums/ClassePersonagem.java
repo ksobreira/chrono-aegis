@@ -1,4 +1,8 @@
 package com.chronoaegis.personagens_service.enums;
 
-public class ClassePersonagem {
+public enum ClassePersonagem {
+    GUERREIRO,
+    MAGO,
+    ARQUEIRO,
+    CLERIGO
 }

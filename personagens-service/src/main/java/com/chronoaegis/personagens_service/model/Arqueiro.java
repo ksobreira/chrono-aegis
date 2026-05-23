@@ -1,4 +1,5 @@
 package com.chronoaegis.personagens_service.model;
-
-public class Arqueiro {
+import jakarta.persistence.Entity;
+public class Arqueiro extends Personagem{
+    public Arqueiro(){}
 }
