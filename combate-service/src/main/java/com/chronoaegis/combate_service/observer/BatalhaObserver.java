@@ -1,4 +1,7 @@
 package com.chronoaegis.combate_service.observer;
 
-public class BatalhaObserver {
+import com.chronoaegis.combate_service.model.BatalhaSession;
+
+public interface BatalhaObserver {
+    void notificar(BatalhaSession sessao, String evento);
 }
