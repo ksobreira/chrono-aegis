@@ -1,4 +1,5 @@
 package com.chronoaegis.combate_service.strategy;
 
-public class DamageCalculationStrategy {
+public interface DamageCalculationStrategy {
+    int calcular(int ataque, int danoArma, int defesaAlvo);
 }
