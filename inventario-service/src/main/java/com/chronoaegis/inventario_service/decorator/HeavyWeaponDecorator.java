@@ -2,7 +2,7 @@ package com.chronoaegis.inventario_service.decorator;
 
 public class HeavyWeaponDecorator extends WeaponDecorator{
 
-    public HeavyWeaponDecorator(WeaponDecorator weapon){
+    public HeavyWeaponDecorator(WeaponComponent weapon){
         super(weapon);
     }
 

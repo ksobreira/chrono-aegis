@@ -9,6 +9,6 @@ import java.util.List;
 public class ArmaDTO {
     private String nome;
     private int danoBase;
-    private int forcaMaxima;
+    private int forcaMinima;
     private List<WeaponTag> tags;
 }
