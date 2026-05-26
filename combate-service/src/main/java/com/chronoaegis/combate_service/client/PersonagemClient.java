@@ -1,4 +1,18 @@
 package com.chronoaegis.combate_service.client;
 
-public class PersonagemClient {
+import com.chronoaegis.combate_service.dto.PersonagemResponseDTO;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@FeignClient(name = "personagens-service", url = "http://localhost:8083")
+public interface PersonagemClient {
+
+    @GetMapping("/personagens/{id}")
+    PersonagemResponseDTO buscarPorId(@PathVariable Long id);
+
+    @PostMapping("/personagens/{id}/ganhar-xp")
+    void ganharXp(@PathVariable Long id, @RequestParam int xp);
 }
