@@ -8,8 +8,10 @@ import com.chronoaegis.combate_service.service.BatalhaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+// CORRIGIDO: era /combate — gateway roteia /batalha/**
 @RestController
-@RequestMapping("/combate")
+@RequestMapping("/batalha")
+@CrossOrigin(origins = "*")
 public class BatalhaController {
 
     private final BatalhaService batalhaService;

@@ -1,7 +1,7 @@
 package com.chronoaegis.combate_service.dto;
 
-import lombok.Data;
 import com.chronoaegis.combate_service.enums.TipoAcao;
+import lombok.Data;
 
 import java.util.UUID;
 

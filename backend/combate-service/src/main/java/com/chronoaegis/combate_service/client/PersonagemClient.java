@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "personagens-service", url = "http://localhost:8083")
+@FeignClient(name = "personagens-service")
 public interface PersonagemClient {
 
-    @GetMapping("/personagens/{id}")
+    @GetMapping("/personagens/interno/{id}")
     PersonagemResponseDTO buscarPorId(@PathVariable Long id);
 
     @PostMapping("/personagens/{id}/ganhar-xp")
