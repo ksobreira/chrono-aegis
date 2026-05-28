@@ -1,13 +1,9 @@
 import axios from 'axios';
-import { authHeader } from './authService';
 
 const API = 'http://localhost:8080/batalha';
 
-export const iniciarBatalha = (dados) =>
-  axios.post(`${API}/iniciar`, dados, { headers: authHeader() });
+export const iniciarBatalha = (dto) =>
+  axios.post(`${API}/iniciar`, dto);
 
-export const executarTurno = (batalhaId, acao) =>
-  axios.post(`${API}/${batalhaId}/turno`, acao, { headers: authHeader() });
-
-export const buscarBatalha = (batalhaId) =>
-  axios.get(`${API}/${batalhaId}`, { headers: authHeader() });
+export const executarAcao = (dto) =>
+  axios.post(`${API}/acao`, dto);

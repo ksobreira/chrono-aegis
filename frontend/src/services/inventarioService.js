@@ -1,36 +1,35 @@
 import axios from 'axios';
-import { authHeader } from './authService';
 
 const API_INVENTARIO = 'http://localhost:8080/inventario';
-const API_ITENS = 'http://localhost:8080/itens';
-const API_ARMAS = 'http://localhost:8080/itens/armas';
+const API_ITENS      = 'http://localhost:8080/itens';
+const API_ARMAS      = 'http://localhost:8080/itens/armas';
 
-// Inventário
+
 export const buscarInventario = (personagemId) =>
-  axios.get(`${API_INVENTARIO}/${personagemId}`, { headers: authHeader() });
+  axios.get(`${API_INVENTARIO}/${personagemId}`);
 
-export const equiparItem = (dados) =>
-  axios.post(`${API_INVENTARIO}/equipar`, dados, { headers: authHeader() });
+export const equiparItem = (dto) =>
+  axios.post(`${API_INVENTARIO}/equipar`, dto);
 
 // Itens
 export const criarItem = (item) =>
-  axios.post(API_ITENS, item, { headers: authHeader() });
+  axios.post(API_ITENS, item);
 
 export const buscarItensPorPersonagem = (personagemId) =>
-  axios.get(`${API_ITENS}/personagem/${personagemId}`, { headers: authHeader() });
+  axios.get(`${API_ITENS}/personagem/${personagemId}`);
 
 export const buscarItemPorId = (id) =>
-  axios.get(`${API_ITENS}/${id}`, { headers: authHeader() });
+  axios.get(`${API_ITENS}/${id}`);
 
 export const deletarItem = (id) =>
-  axios.delete(`${API_ITENS}/${id}`, { headers: authHeader() });
+  axios.delete(`${API_ITENS}/${id}`);
 
 // Armas
 export const criarArma = (arma) =>
-  axios.post(API_ARMAS, arma, { headers: authHeader() });
+  axios.post(API_ARMAS, arma);
 
 export const buscarArmaPorId = (id) =>
-  axios.get(`${API_ARMAS}/${id}`, { headers: authHeader() });
+  axios.get(`${API_ARMAS}/${id}`);
 
 export const listarArmas = () =>
-  axios.get(API_ARMAS, { headers: authHeader() });
+  axios.get(API_ARMAS);
