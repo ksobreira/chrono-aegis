@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/personagens")
+@CrossOrigin(origins = "*")
 public class PersonagemController {
 
     private final PersonagemService service;
@@ -27,6 +28,12 @@ public class PersonagemController {
     @GetMapping("/usuario/{usuarioId}")
     public ResponseEntity<List<Personagem>> buscarPorUsuario(@PathVariable Long usuarioId) {
         return ResponseEntity.ok(service.buscarPorUsuario(usuarioId));
+    }
+
+    // ADICIONADO: endpoint interno usado pelo combate-service via Feign
+    @GetMapping("/interno/{id}")
+    public ResponseEntity<Personagem> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
     @PostMapping("/{id}/ganhar-xp")
