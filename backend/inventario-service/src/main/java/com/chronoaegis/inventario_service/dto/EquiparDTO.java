@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class EquiparDTO {
-    private long personagemId;
-    private long armaId;
-    private int forcaDoPersonagem;
+    private Long personagemId;
+    private Long armaId;
 }

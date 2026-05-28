@@ -6,10 +6,12 @@ import com.chronoaegis.inventario_service.service.ArmaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/itens/armas")
+@CrossOrigin(origins = "*")
 public class ArmaController {
 
     private final ArmaService armaService;

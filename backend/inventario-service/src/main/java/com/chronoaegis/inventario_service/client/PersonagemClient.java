@@ -1,30 +1,25 @@
 package com.chronoaegis.inventario_service.client;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
-@Component
-public class PersonagemClient {
+import java.util.Map;
 
-    private final RestTemplate restTemplate;
-    private static final String BASE_URL = "http://localhost:8083/personagens";
+// CORRIGIDO: usa Feign + Eureka em vez de RestTemplate com URL hardcoded
+@FeignClient(name = "personagens-service")
+public interface PersonagemClient {
 
-    public PersonagemClient(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    @GetMapping("/personagens/interno/{id}")
+    Map<String, Object> buscarPersonagem(@PathVariable Long id);
 
-    public int buscarForcaDoPersonagem(Long personagemId) {
+    default int buscarForcaDoPersonagem(Long personagemId) {
         try {
-            var personagem = restTemplate.getForObject(
-                    BASE_URL + "/" + personagemId,
-                    java.util.Map.class
-            );
+            Map<String, Object> personagem = buscarPersonagem(personagemId);
             if (personagem != null && personagem.containsKey("ataque")) {
-                return (int) personagem.get("ataque");
+                return ((Number) personagem.get("ataque")).intValue();
             }
-            return 0;
-        } catch (Exception e) {
-            return 0;
-        }
+        } catch (Exception ignored) {}
+        return 0;
     }
 }
