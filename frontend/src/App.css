@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Press Start 2P', monospace;
+  background: #0a0a14;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* ── Navbar ── */
+.pix-navbar {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 2rem;
+  height: 56px;
+  background: #111827;
+  border-bottom: 3px solid #4a9eff;
+}
+
+.pix-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #ffd700;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.pix-navbar-links {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.pix-nav-link {
+  color: #555;
+  text-decoration: none;
+  font-size: 7px;
+  padding: 6px 12px;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.pix-nav-link:hover { color: #4a9eff; border-color: #333; }
+.pix-nav-link.active { color: #4a9eff; border-color: #4a9eff; background: #16213e; }
+
+.pix-logout {
+  background: transparent;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #555;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.pix-logout:hover { border-color: #ff4444; color: #ff4444; }
+
+/* ── Layout ── */
+.pix-main { padding: 2rem; max-width: 1100px; margin: 0 auto; }
+
+.pix-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #333;
+}
+
+.pix-page-title { color: #ffd700; font-size: 14px; letter-spacing: 1px; }
+
+/* ── Inputs ── */
+.pix-input {
+  width: 100%;
+  background: #0a0a14;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.pix-input:focus { border-color: #4a9eff; }
+
+.pix-select {
+  width: 100%;
+  background: #0a0a14;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #fff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 10px 12px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.pix-select:focus { border-color: #4a9eff; }
+.pix-select option { background: #111827; }
+
+.pix-field { margin-bottom: 16px; }
+.pix-label { display: block; color: #aaa; font-size: 7px; margin-bottom: 6px; }
+
+/* ── Buttons ── */
+.pix-btn {
+  background: #16213e;
+  border: 2px solid #4a9eff;
+  border-radius: 2px;
+  color: #4a9eff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.pix-btn:hover { background: #1a2a4a; }
+.pix-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.pix-btn-full { width: 100%; }
+
+.pix-btn-gold {
+  background: #1a1500;
+  border: 2px solid #ffd700;
+  border-radius: 2px;
+  color: #ffd700;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.pix-btn-gold:hover { background: #2a2000; }
+.pix-btn-gold:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.pix-btn-danger {
+  background: #2a0a0a;
+  border: 2px solid #ff4444;
+  border-radius: 2px;
+  color: #ff6666;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.pix-btn-danger:hover { background: #3a0a0a; }
+
+.pix-btn-ghost {
+  background: transparent;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #555;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.pix-btn-ghost:hover { border-color: #4a9eff; color: #4a9eff; }
+
+/* ── Cards ── */
+.pix-card {
+  background: #111827;
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 16px 20px;
+}
+
+.pix-card-title {
+  color: #ffd700;
+  font-size: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #333;
+}
+
+.pix-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+/* ── Feedback ── */
+.pix-erro {
+  background: #2a0a0a;
+  border: 2px solid #ff4444;
+  border-radius: 2px;
+  color: #ff6666;
+  font-size: 7px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+}
+
+.pix-sucesso {
+  background: #0a2a0a;
+  border: 2px solid #44ff44;
+  border-radius: 2px;
+  color: #44ff44;
+  font-size: 7px;
+  padding: 8px 10px;
+  margin-bottom: 12px;
+}
+
+.pix-empty {
+  text-align: center;
+  color: #555;
+  font-size: 8px;
+  padding: 40px;
+  border: 2px dashed #333;
+  border-radius: 4px;
+}
+
+.pix-loading {
+  text-align: center;
+  color: #555;
+  font-size: 8px;
+  padding: 40px;
+}
+
+/* ── HP bars ── */
+.pix-hp-bg { background: #333; height: 6px; border-radius: 2px; overflow: hidden; }
+.pix-hp-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+.pix-hp-fill.high { background: #44ff44; }
+.pix-hp-fill.mid  { background: #ffdd00; }
+.pix-hp-fill.low  { background: #ff4444; }
+
+/* ── XP bar ── */
+.pix-xp-bg { background: #333; height: 5px; border-radius: 2px; overflow: hidden; }
+.pix-xp-fill { height: 100%; background: #4a9eff; border-radius: 2px; transition: width 0.5s ease; }
+
+/* ── Animations ── */
+@keyframes blink   { 50% { opacity: 0; } }
+@keyframes rainbow { 0%{color:#ff0}25%{color:#0f0}50%{color:#0ff}75%{color:#f0f}100%{color:#ff0} }
+@keyframes pulse   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.08)} }
+@keyframes idle-enemy { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+@keyframes idle-hero  { 0%,100%{transform:scaleX(-1) translateY(0)} 50%{transform:scaleX(-1) translateY(-6px)} }
+@keyframes shake      { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-10px)} 75%{transform:translateX(10px)} }
+@keyframes shake-hero { 0%,100%{transform:scaleX(-1) translateX(0)} 25%{transform:scaleX(-1) translateX(10px)} 75%{transform:scaleX(-1) translateX(-10px)} }
+@keyframes flash-it   { 0%,100%{opacity:1} 50%{opacity:0.1} }

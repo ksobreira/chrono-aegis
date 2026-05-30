@@ -1,0 +1,139 @@
+.perg-card {
+  background: #111827;
+  border: 2px solid #333;
+  border-radius: 4px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+.perg-card:hover { border-color: #555; }
+
+.perg-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.perg-sprite { font-size: 28px; }
+
+.perg-nome {
+  color: #ffd700;
+  font-size: 8px;
+  flex: 1;
+}
+
+.perg-classe {
+  color: #aaa;
+  font-size: 6px;
+  display: block;
+  margin-top: 3px;
+}
+
+.perg-nivel {
+  background: #16213e;
+  border: 2px solid #4a9eff;
+  border-radius: 2px;
+  color: #4a9eff;
+  font-size: 6px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.perg-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.perg-stat {
+  background: #0a0a14;
+  border: 1px solid #222;
+  border-radius: 2px;
+  padding: 6px 8px;
+}
+
+.perg-stat-label {
+  color: #555;
+  font-size: 5px;
+  margin-bottom: 3px;
+  display: block;
+}
+
+.perg-stat-value {
+  color: #fff;
+  font-size: 8px;
+}
+
+.perg-xp-row {
+  display: flex;
+  justify-content: space-between;
+  color: #555;
+  font-size: 5px;
+  margin-bottom: 4px;
+}
+
+.perg-evolucao-panel {
+  background: #0a0a14;
+  border: 2px solid #ffd700;
+  border-radius: 2px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.perg-evolucao-label {
+  color: #ffd700;
+  font-size: 6px;
+}
+
+.perg-arquetipos {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.perg-arq-btn {
+  background: #111827;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #aaa;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.perg-arq-btn:hover,
+.perg-arq-btn.selected {
+  border-color: #ffd700;
+  color: #ffd700;
+}
+
+.perg-evolucao-actions { display: flex; gap: 6px; }
+
+.perg-btn-evoluir {
+  width: 100%;
+  background: #1a1500;
+  border: 2px dashed #ffd700;
+  border-radius: 2px;
+  color: #ffd700;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 8px;
+  cursor: pointer;
+  transition: background 0.15s, border-style 0.15s;
+}
+
+.perg-btn-evoluir:hover {
+  background: #2a2000;
+  border-style: solid;
+}
+
+.form-card {
+  max-width: 420px;
+  margin-bottom: 1rem;
+}

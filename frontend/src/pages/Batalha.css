@@ -1,0 +1,268 @@
+.batalha-root {
+  font-family: 'Press Start 2P', monospace;
+  padding: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ── Cena ── */
+.batalha-scene {
+  background: linear-gradient(180deg, #1e3a5f 0%, #1e3a5f 55%, #2d5a1b 55%, #3a7a20 100%);
+  border: 3px solid #4a9eff;
+  border-radius: 4px;
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+/* HUDs */
+.batalha-hud-enemy {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 8px 14px;
+  min-width: 190px;
+}
+
+.batalha-hud-hero {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  padding: 8px 14px;
+  min-width: 190px;
+}
+
+.batalha-hud-name {
+  color: #fff;
+  font-size: 7px;
+  margin-bottom: 5px;
+}
+
+.batalha-hp-label {
+  color: #aaa;
+  font-size: 6px;
+  margin-bottom: 3px;
+}
+
+.batalha-hp-num {
+  color: #fff;
+  font-size: 6px;
+  text-align: right;
+  margin-top: 3px;
+}
+
+/* Sprites */
+.batalha-sprite-enemy {
+  position: absolute;
+  bottom: 110px;
+  left: 120px;
+  font-size: 72px;
+  line-height: 1;
+  animation: idle-enemy 1.2s ease-in-out infinite;
+  transition: opacity 0.6s;
+}
+
+.batalha-sprite-hero {
+  position: absolute;
+  bottom: 30px;
+  right: 120px;
+  font-size: 72px;
+  line-height: 1;
+  transform: scaleX(-1);
+  animation: idle-hero 1.2s ease-in-out infinite;
+  transition: opacity 0.6s;
+}
+
+.batalha-sprite-enemy.shake { animation: shake 0.35s steps(4) !important; }
+.batalha-sprite-hero.shake  { animation: shake-hero 0.35s steps(4) !important; }
+.batalha-sprite-enemy.flash,
+.batalha-sprite-hero.flash  { animation: flash-it 0.35s steps(2) !important; }
+.batalha-sprite-enemy.dead,
+.batalha-sprite-hero.dead   { opacity: 0 !important; }
+
+/* ── Log ── */
+.batalha-log {
+  background: #000;
+  border: 3px solid #4a9eff;
+  border-radius: 4px;
+  padding: 14px 18px;
+  min-height: 60px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.batalha-log-text {
+  color: #fff;
+  font-size: 9px;
+  line-height: 2;
+  flex: 1;
+}
+
+.batalha-cursor {
+  width: 9px;
+  height: 13px;
+  background: #fff;
+  animation: blink 0.6s steps(1) infinite;
+  flex-shrink: 0;
+}
+
+/* ── Ações ── */
+.batalha-actions {
+  background: #000;
+  border: 3px solid #4a9eff;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.batalha-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.batalha-acao-btn {
+  background: #1a1a2e;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #aaa;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 12px 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.1s, color 0.1s, background 0.1s;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.batalha-acao-btn:hover,
+.batalha-acao-btn.selected {
+  border-color: #4a9eff;
+  color: #4a9eff;
+  background: #16213e;
+}
+
+.batalha-acao-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.batalha-acao-desc { font-size: 5px; color: #555; }
+.batalha-acao-btn.selected .batalha-acao-desc { color: #4a9eff99; }
+
+.batalha-exec-btn {
+  width: 100%;
+  background: #16213e;
+  border: 2px solid #4a9eff;
+  border-radius: 2px;
+  color: #4a9eff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 9px;
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.batalha-exec-btn:hover { background: #1a2a4a; }
+.batalha-exec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Seleção de personagem ── */
+.batalha-select-title {
+  color: #4a9eff;
+  font-size: 9px;
+  margin-bottom: 14px;
+}
+
+.batalha-char-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.batalha-char-btn {
+  background: #111827;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #aaa;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.batalha-char-btn:hover { border-color: #4a9eff; color: #4a9eff; }
+.batalha-char-btn.active { border-color: #ffd700; color: #ffd700; background: #1a1500; }
+
+.batalha-char-info { display: flex; flex-direction: column; gap: 5px; }
+.batalha-char-nome { color: inherit; font-size: 7px; }
+.batalha-char-stats { color: #555; font-size: 5px; }
+.batalha-char-btn.active .batalha-char-stats { color: #ffd70099; }
+
+.batalha-start-btn {
+  width: 100%;
+  background: #1a0a0a;
+  border: 3px solid #ff4444;
+  border-radius: 2px;
+  color: #ff6666;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 10px;
+  padding: 14px;
+  cursor: pointer;
+  transition: background 0.15s;
+  letter-spacing: 1px;
+}
+.batalha-start-btn:hover { background: #2a0a0a; }
+.batalha-start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Fim de batalha ── */
+.batalha-end {
+  text-align: center;
+  padding: 24px 0;
+}
+
+.batalha-end-vitoria {
+  font-size: 20px;
+  animation: rainbow 1s linear infinite;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.batalha-end-derrota {
+  font-size: 20px;
+  color: #ff4444;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.batalha-end-xp {
+  color: #ffd700;
+  font-size: 9px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.batalha-retry-btn {
+  background: #111827;
+  border: 2px solid #4a9eff;
+  border-radius: 2px;
+  color: #4a9eff;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.batalha-retry-btn:hover { background: #16213e; }

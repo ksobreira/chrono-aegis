@@ -1,0 +1,70 @@
+.inv-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.inv-char-btn {
+  background: #111827;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #aaa;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 6px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inv-char-btn:hover { border-color: #4a9eff; color: #4a9eff; }
+.inv-char-btn.active { border-color: #ffd700; color: #ffd700; background: #1a1500; }
+
+.inv-char-nivel { color: #555; font-size: 5px; }
+
+.inv-equip-card {
+  margin-bottom: 1rem;
+}
+
+.inv-equip-slot {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #0a0a14;
+  border: 1px solid #222;
+  border-radius: 2px;
+  padding: 10px 12px;
+}
+
+.inv-equip-label { color: #555; font-size: 6px; min-width: 100px; }
+.inv-equip-value { color: #fff; font-size: 7px; }
+.inv-equip-value.equipped { color: #ffd700; }
+
+.inv-actions { display: flex; gap: 8px; margin-bottom: 1rem; }
+
+.inv-arma-card {
+  background: #0a0a14;
+  border: 2px solid #333;
+  border-radius: 2px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inv-arma-icon { font-size: 20px; }
+.inv-arma-nome { color: #fff; font-size: 7px; display: block; margin-bottom: 4px; }
+.inv-arma-dano { color: #ff6666; font-size: 6px; }
+.inv-arma-equipped-badge {
+  margin-left: auto;
+  background: #1a1500;
+  border: 1px solid #ffd700;
+  border-radius: 2px;
+  color: #ffd700;
+  font-size: 5px;
+  padding: 3px 6px;
+  white-space: nowrap;
+}
