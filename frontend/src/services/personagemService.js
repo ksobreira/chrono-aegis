@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getUsuarioId } from './authService';
 
-const API = 'http://localhost:8080/personagens';
+const API = '/personagens';
 
 export const criarPersonagem = (dados) =>
   axios.post(API, dados);

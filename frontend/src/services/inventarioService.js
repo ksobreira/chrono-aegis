@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const API_INVENTARIO = 'http://localhost:8080/inventario';
-const API_ITENS      = 'http://localhost:8080/itens';
-const API_ARMAS      = 'http://localhost:8080/itens/armas';
+const API_INVENTARIO = '/inventario';
+const API_ITENS = '/itens';
+const API_ARMAS = '/itens/armas';
 
 
 export const buscarInventario = (personagemId) =>

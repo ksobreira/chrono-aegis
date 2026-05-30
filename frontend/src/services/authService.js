@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'http://localhost:8080/auth';
+const API = "/auth";
 
 // CORRIGIDO: registrar agora retorna UsuarioDTO com { id, nomeJogador, email, role }
 export const registrar = async (dados) => {

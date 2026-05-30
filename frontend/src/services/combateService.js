@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = 'http://localhost:8080/batalha';
+const API = '/batalha';
 
 export const iniciarBatalha = (dto) =>
   axios.post(`${API}/iniciar`, dto);
