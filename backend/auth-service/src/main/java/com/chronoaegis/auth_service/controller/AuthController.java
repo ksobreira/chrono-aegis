@@ -5,6 +5,8 @@ import com.chronoaegis.auth_service.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.List;
 
@@ -55,5 +57,10 @@ public class AuthController {
     public ResponseEntity<String> deletar(@PathVariable Long id) {
         authService.deletar(id);
         return ResponseEntity.ok("Usuário deletado com sucesso!");
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 }
