@@ -7,7 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/personagens")
@@ -30,10 +32,18 @@ public class PersonagemController {
         return ResponseEntity.ok(service.buscarPorUsuario(usuarioId));
     }
 
-    // ADICIONADO: endpoint interno usado pelo combate-service via Feign
     @GetMapping("/interno/{id}")
-    public ResponseEntity<Personagem> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(service.buscarPorId(id));
+    public ResponseEntity<Map<String, Object>> buscarPorId(@PathVariable Long id) {
+        Personagem p = service.buscarPorId(id);
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", p.getId());
+        map.put("nome", p.getNome());
+        map.put("nivel", p.getNivel());
+        map.put("vidaMax", p.getVidaMax());
+        map.put("ataque", p.getAtaque());
+        map.put("defesa", p.getDefesa());
+        map.put("posicao", p.getPosicao() != null ? p.getPosicao().name() : "FRENTE");
+        return ResponseEntity.ok(map);
     }
 
     @PostMapping("/{id}/ganhar-xp")
