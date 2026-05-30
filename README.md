@@ -234,19 +234,7 @@ Base URL: `http://localhost:8080`
 
 **Ações:** `ATACAR` `USAR_ITEM` `FUGIR`
 
----
 
-## 🗄️ Consoles H2 (banco em desenvolvimento)
-
-| Serviço | URL do Console | JDBC URL |
-|---------|----------------|----------|
-| auth-service | http://localhost:8081/h2-console | `jdbc:h2:file:./data/authdb` |
-| personagens-service | http://localhost:8083/h2-console | `jdbc:h2:file:./data/personagensdb` |
-| inventario-service | http://localhost:8084/h2-console | `jdbc:h2:file:./data/inventariodb` |
-
-Usuário: `sa` | Senha: *(vazia)*
-
----
 
 ## 🛠️ Tecnologias
 
