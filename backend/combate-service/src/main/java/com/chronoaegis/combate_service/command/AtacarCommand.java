@@ -6,6 +6,8 @@ import com.chronoaegis.combate_service.strategy.DamageCalculationStrategy;
 import com.chronoaegis.combate_service.strategy.FinesseStrategy;
 import com.chronoaegis.combate_service.strategy.NormalDamageStrategy;
 
+import java.util.List;
+
 public class AtacarCommand implements ComandoBatalha {
 
     @Override
@@ -23,13 +25,12 @@ public class AtacarCommand implements ComandoBatalha {
 
         sessao.getMonstro().setHpAtual(sessao.getMonstro().getHpAtual() - dano);
 
-        sessao.getLog().add("Jogador atacou! Dano: " + dano + " | HP Monstro: " + sessao.getMonstro().getHpAtual());
-
         ResultadoTurnoDTO resultado = new ResultadoTurnoDTO();
         resultado.setHpJogador(sessao.getHpAtualPersonagem());
         resultado.setHpMonstro(sessao.getMonstro().getHpAtual());
         resultado.setTurnoAtual("TURNO_INIMIGO");
-        resultado.setLog(sessao.getLog());
+        // CORRIGIDO: só a mensagem do turno atual, sem acumular
+        resultado.setLog(List.of("Jogador atacou! Dano: " + dano + " | HP Monstro: " + sessao.getMonstro().getHpAtual()));
         resultado.setFimDeBatalha(false);
         resultado.setVitoria(false);
 
