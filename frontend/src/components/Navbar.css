@@ -1,0 +1,70 @@
+.pix-navbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  height: 56px;
+  background: #111827;
+  border-bottom: 3px solid #4a9eff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.pix-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #ffd700;
+  font-size: 11px;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.pix-navbar-brand-icon { font-size: 18px; }
+
+.pix-navbar-links {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.pix-nav-link {
+  color: #555;
+  text-decoration: none;
+  font-size: 7px;
+  padding: 6px 12px;
+  border: 2px solid transparent;
+  border-radius: 2px;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pix-nav-link:hover {
+  color: #4a9eff;
+  border-color: #333;
+}
+
+.pix-nav-link.active {
+  color: #4a9eff;
+  border-color: #4a9eff;
+  background: #16213e;
+}
+
+.pix-logout {
+  background: transparent;
+  border: 2px solid #333;
+  border-radius: 2px;
+  color: #555;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 7px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.pix-logout:hover { border-color: #ff4444; color: #ff4444; }
