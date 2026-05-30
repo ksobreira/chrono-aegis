@@ -23,35 +23,24 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/personagens" element={<Personagens />} />
-        <Route path="/inventario" element={<Inventario />} />
-        <Route path="/batalha" element={<Batalha />} />
-        
 
-        <Route
-          path="/personagens"
-          element={
-            <PrivateRoute>
-              <Layout><Personagens /></Layout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/inventario"
-          element={
-            <PrivateRoute>
-              <Layout><Inventario /></Layout>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/batalha"
-          element={
-            <PrivateRoute>
-              <Layout><Batalha /></Layout>
-            </PrivateRoute>
-          }
-        />
+        <Route path="/personagens" element={
+          <PrivateRoute>
+            <Layout><Personagens /></Layout>
+          </PrivateRoute>
+        } />
+
+        <Route path="/inventario" element={
+          <PrivateRoute>
+            <Layout><Inventario /></Layout>
+          </PrivateRoute>
+        } />
+
+        <Route path="/batalha" element={
+          <PrivateRoute>
+            <Layout><Batalha /></Layout>
+          </PrivateRoute>
+        } />
 
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>

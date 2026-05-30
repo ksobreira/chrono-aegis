@@ -1,23 +1,19 @@
 import { useState, useEffect } from 'react';
 import { buscarPorUsuario, criarPersonagem, evoluirPersonagem } from '../services/personagemService';
+import './Personagens.css';
 
 const CLASSES = ['GUERREIRO', 'MAGO', 'ARQUEIRO', 'CLERIGO'];
 
 const ARQUETIPOS_POR_CLASSE = {
   GUERREIRO: ['PALADINO', 'BERSERKER'],
-  MAGO: ['FEITICEIRO', 'BATTLEMAGE'],
-  ARQUEIRO: ['SNIPER', 'RANGER'],
-  CLERIGO: ['SACERDOTE', 'INQUISIDOR'],
+  MAGO:      ['FEITICEIRO', 'BATTLEMAGE'],
+  ARQUEIRO:  ['SNIPER', 'RANGER'],
+  CLERIGO:   ['SACERDOTE', 'INQUISIDOR'],
 };
 
-const CLASSE_ICONS = {
-  GUERREIRO: '⚔️',
-  MAGO: '🔮',
-  ARQUEIRO: '🏹',
-  CLERIGO: '✨',
-};
+const CLASSE_ICON = { GUERREIRO: '⚔️', MAGO: '🧙', ARQUEIRO: '🏹', CLERIGO: '✨' };
 
-const ARQUETIPO_ICONS = {
+const ARQUETIPO_ICON = {
   PALADINO: '🛡️', BERSERKER: '💢', FEITICEIRO: '💫', BATTLEMAGE: '⚡',
   SNIPER: '🎯', RANGER: '🌿', SACERDOTE: '🌟', INQUISIDOR: '🔥', NENHUM: '—',
 };
@@ -34,12 +30,12 @@ export default function Personagens() {
   const [arquetipoSel, setArquetipoSel] = useState('');
 
   const carregar = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const res = await buscarPorUsuario(usuarioId);
       setPersonagens(res.data);
     } catch {
-      setErro('Não foi possível carregar os personagens.');
+      setErro('Erro ao carregar personagens.');
     } finally {
       setLoading(false);
     }
@@ -74,146 +70,125 @@ export default function Personagens() {
     }
   };
 
-  const xpParaProximoNivel = (nivel) => nivel * 100;
+  const xpMax = (nivel) => nivel * 100;
 
   return (
-    <div className="page-container">
-      <div className="page-header">
-        <h1 className="page-title">⚔️ Personagens</h1>
-        <button className="btn-primary" onClick={() => setShowForm(!showForm)}>
-          {showForm ? 'Cancelar' : '+ Novo Personagem'}
+    <div className="pix-main">
+      <div className="pix-page-header">
+        <h1 className="pix-page-title">⚔️ PERSONAGENS</h1>
+        <button className="pix-btn" onClick={() => setShowForm(!showForm)}>
+          {showForm ? '✕ CANCELAR' : '+ NOVO'}
         </button>
       </div>
 
-      {erro && <p className="form-error">{erro}</p>}
+      {erro && <div className="pix-erro">{erro}</div>}
 
       {showForm && (
-        <div className="card form-card">
-          <h2 className="card-title">Criar Personagem</h2>
-          <form onSubmit={handleCriar} className="auth-form">
-            <div className="form-group">
-              <label>Nome</label>
-              <input
-                type="text"
-                value={form.nome}
+        <div className="pix-card form-card">
+          <div className="pix-card-title">CRIAR HERÓI</div>
+          <form onSubmit={handleCriar}>
+            <div className="pix-field">
+              <label className="pix-label">NOME</label>
+              <input className="pix-input" type="text" value={form.nome}
                 onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                placeholder="Nome do herói"
-                required
-              />
+                placeholder="Nome do herói" required />
             </div>
-            <div className="form-group">
-              <label>Classe</label>
-              <select
-                value={form.classe}
-                onChange={(e) => setForm({ ...form, classe: e.target.value })}
-              >
+            <div className="pix-field">
+              <label className="pix-label">CLASSE</label>
+              <select className="pix-select" value={form.classe}
+                onChange={(e) => setForm({ ...form, classe: e.target.value })}>
                 {CLASSES.map((c) => (
-                  <option key={c} value={c}>{CLASSE_ICONS[c]} {c}</option>
+                  <option key={c} value={c}>{CLASSE_ICON[c]} {c}</option>
                 ))}
               </select>
             </div>
-            <button type="submit" className="btn-primary" disabled={criando}>
-              {criando ? 'Criando...' : 'Criar'}
+            <button className="pix-btn" type="submit" disabled={criando}>
+              {criando ? 'CRIANDO...' : '► CRIAR'}
             </button>
           </form>
         </div>
       )}
 
       {loading ? (
-        <div className="loading-state">
-          <span className="spinner">⟳</span> Carregando...
-        </div>
+        <div className="pix-loading">⟳ CARREGANDO...</div>
       ) : personagens.length === 0 ? (
-        <div className="empty-state">
-          <p>Nenhum personagem criado ainda.</p>
-          <p>Comece sua jornada criando um herói!</p>
+        <div className="pix-empty">
+          <p>Nenhum herói criado ainda.</p>
+          <p style={{ marginTop: 12, fontSize: 7 }}>Crie seu primeiro personagem!</p>
         </div>
       ) : (
-        <div className="cards-grid">
+        <div className="pix-cards-grid">
           {personagens.map((p) => {
-            const xpNeeded = xpParaProximoNivel(p.nivel);
-            const xpPct = Math.min((p.xp / xpNeeded) * 100, 100);
-            const podeEvoluir = p.arquetipo === 'NENHUM' && p.nivel >= 5;
+            const xpPct = Math.min((p.xp / xpMax(p.nivel)) * 100, 100);
+            const podeEvoluir = p.arquetipo === 'NENHUM' && p.nivel >= 4;
 
             return (
-              <div key={p.id} className="card personagem-card">
-                <div className="personagem-header">
-                  <span className="classe-icon">{CLASSE_ICONS[p.classeBase]}</span>
-                  <div>
-                    <h2 className="personagem-nome">{p.nome}</h2>
-                    <span className="personagem-classe">{p.classeBase}</span>
+              <div key={p.id} className="perg-card">
+                <div className="perg-header">
+                  <span className="perg-sprite">{CLASSE_ICON[p.classeBase]}</span>
+                  <div style={{ flex: 1 }}>
+                    <div className="perg-nome">{p.nome}</div>
+                    <span className="perg-classe">{p.classeBase}</span>
                   </div>
-                  <span className="nivel-badge">Nv.{p.nivel}</span>
+                  <span className="perg-nivel">NV.{p.nivel}</span>
                 </div>
 
-                <div className="personagem-stats">
-                  <div className="stat">
-                    <span className="stat-label">❤️ Vida</span>
-                    <span className="stat-value">{p.vidaMax}</span>
+                <div className="perg-stats">
+                  <div className="perg-stat">
+                    <span className="perg-stat-label">❤️ VIDA</span>
+                    <span className="perg-stat-value">{p.vidaMax}</span>
                   </div>
-                  <div className="stat">
-                    <span className="stat-label">⚔️ Ataque</span>
-                    <span className="stat-value">{p.ataque}</span>
+                  <div className="perg-stat">
+                    <span className="perg-stat-label">⚔️ ATAQUE</span>
+                    <span className="perg-stat-value">{p.ataque}</span>
                   </div>
-                  <div className="stat">
-                    <span className="stat-label">🛡️ Defesa</span>
-                    <span className="stat-value">{p.defesa}</span>
+                  <div className="perg-stat">
+                    <span className="perg-stat-label">🛡️ DEFESA</span>
+                    <span className="perg-stat-value">{p.defesa}</span>
                   </div>
-                  <div className="stat">
-                    <span className="stat-label">🏅 Arquétipo</span>
-                    <span className="stat-value">
-                      {ARQUETIPO_ICONS[p.arquetipo]} {p.arquetipo}
+                  <div className="perg-stat">
+                    <span className="perg-stat-label">🏅 ARQUÉTIPO</span>
+                    <span className="perg-stat-value" style={{ fontSize: 6 }}>
+                      {ARQUETIPO_ICON[p.arquetipo]} {p.arquetipo}
                     </span>
                   </div>
                 </div>
 
-                <div className="xp-section">
-                  <div className="xp-label">
+                <div>
+                  <div className="perg-xp-row">
                     <span>XP</span>
-                    <span>{p.xp} / {xpNeeded}</span>
+                    <span>{p.xp} / {xpMax(p.nivel)}</span>
                   </div>
-                  <div className="xp-bar">
-                    <div className="xp-fill" style={{ width: `${xpPct}%` }} />
+                  <div className="pix-xp-bg">
+                    <div className="pix-xp-fill" style={{ width: `${xpPct}%` }} />
                   </div>
                 </div>
 
                 {podeEvoluir && (
                   evoluindo === p.id ? (
-                    <div className="evolucao-panel">
-                      <p className="evolucao-label">Escolha o arquétipo:</p>
-                      <div className="arquetipo-options">
+                    <div className="perg-evolucao-panel">
+                      <div className="perg-evolucao-label">✦ ESCOLHA O ARQUÉTIPO:</div>
+                      <div className="perg-arquetipos">
                         {ARQUETIPOS_POR_CLASSE[p.classeBase]?.map((arq) => (
-                          <button
-                            key={arq}
-                            className={`btn-arquetipo ${arquetipoSel === arq ? 'selected' : ''}`}
-                            onClick={() => setArquetipoSel(arq)}
-                          >
-                            {ARQUETIPO_ICONS[arq]} {arq}
+                          <button key={arq}
+                            className={`perg-arq-btn ${arquetipoSel === arq ? 'selected' : ''}`}
+                            onClick={() => setArquetipoSel(arq)}>
+                            {ARQUETIPO_ICON[arq]} {arq}
                           </button>
                         ))}
                       </div>
-                      <div className="evolucao-actions">
-                        <button
-                          className="btn-primary"
-                          onClick={() => handleEvoluir(p.id)}
-                          disabled={!arquetipoSel}
-                        >
-                          Evoluir
+                      <div className="perg-evolucao-actions">
+                        <button className="pix-btn-gold" onClick={() => handleEvoluir(p.id)} disabled={!arquetipoSel}>
+                          ► EVOLUIR
                         </button>
-                        <button
-                          className="btn-secondary"
-                          onClick={() => { setEvoluindo(null); setArquetipoSel(''); }}
-                        >
-                          Cancelar
+                        <button className="pix-btn-ghost" onClick={() => { setEvoluindo(null); setArquetipoSel(''); }}>
+                          CANCELAR
                         </button>
                       </div>
                     </div>
                   ) : (
-                    <button
-                      className="btn-evolucao"
-                      onClick={() => setEvoluindo(p.id)}
-                    >
-                      ✦ Evoluir Arquétipo
+                    <button className="perg-btn-evoluir" onClick={() => setEvoluindo(p.id)}>
+                      ✦ EVOLUIR ARQUÉTIPO
                     </button>
                   )
                 )}

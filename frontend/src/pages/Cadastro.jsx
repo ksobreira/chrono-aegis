@@ -1,97 +1,73 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { registrar } from '../services/authService';
+import './Cadastro.css';
 
 export default function Cadastro() {
-  const [form, setForm] = useState({ nome: '', email: '', senha: '' });
+  const [form, setForm] = useState({ nomeJogador: '', email: '', senha: '' });
   const [erro, setErro] = useState('');
   const [sucesso, setSucesso] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErro('');
-    setSucesso('');
+    setErro(''); setSucesso('');
     setLoading(true);
     try {
       await registrar(form);
       setSucesso('Conta criada! Redirecionando...');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
-      setErro(err.response?.data || 'Erro ao criar conta. Tente novamente.');
+      setErro(err.response?.data || 'Erro ao criar conta.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
-        <div className="auth-header">
-          <span className="auth-rune">✦</span>
-          <h1 className="auth-title">Criar Conta</h1>
-          <p className="auth-subtitle">Junte-se ao reino</p>
+    <div className="cadastro-root">
+      <div className="cadastro-card">
+        <div className="cadastro-logo">
+          <span className="cadastro-logo-icon">✦</span>
+          <div className="cadastro-logo-title">NOVO HERÓI</div>
+          <div className="cadastro-logo-sub">► Junte-se ao reino ◄</div>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label htmlFor="nome">Nome</label>
-            <input
-              id="nome"
-              type="text"
-              name="nome"
-              value={form.nome}
-              onChange={handleChange}
-              placeholder="Seu nome de aventureiro"
-              required
-              autoComplete="name"
-            />
+        <form onSubmit={handleSubmit}>
+          <div className="pix-field">
+            <label className="pix-label">NOME DO HERÓI</label>
+            <input className="pix-input" type="text" name="nomeJogador"
+              value={form.nomeJogador} onChange={handleChange}
+              placeholder="Seu nome de aventureiro" required />
+          </div>
+          <div className="pix-field">
+            <label className="pix-label">E-MAIL</label>
+            <input className="pix-input" type="email" name="email"
+              value={form.email} onChange={handleChange}
+              placeholder="seu@email.com" required />
+          </div>
+          <div className="pix-field">
+            <label className="pix-label">SENHA</label>
+            <input className="pix-input" type="password" name="senha"
+              value={form.senha} onChange={handleChange}
+              placeholder="••••••••" required />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="email">E-mail</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="seu@email.com"
-              required
-              autoComplete="email"
-            />
-          </div>
+          {erro && <div className="pix-erro">{erro}</div>}
+          {sucesso && <div className="pix-sucesso">{sucesso}</div>}
 
-          <div className="form-group">
-            <label htmlFor="senha">Senha</label>
-            <input
-              id="senha"
-              type="password"
-              name="senha"
-              value={form.senha}
-              onChange={handleChange}
-              placeholder="••••••••"
-              required
-              autoComplete="new-password"
-            />
-          </div>
-
-          {erro && <p className="form-error">{erro}</p>}
-          {sucesso && <p className="form-success">{sucesso}</p>}
-
-          <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? 'Criando conta...' : 'Registrar'}
+          <button className="pix-btn pix-btn-full" type="submit" disabled={loading}
+            style={{ marginTop: 8 }}>
+            {loading ? 'CRIANDO...' : '► REGISTRAR'}
           </button>
         </form>
 
-        <p className="auth-footer">
-          Já tem uma conta?{' '}
-          <Link to="/login">Entrar</Link>
-        </p>
+        <div className="cadastro-footer">
+          Já tem conta? <Link to="/login">ENTRAR</Link>
+        </div>
       </div>
     </div>
   );

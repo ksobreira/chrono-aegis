@@ -1,99 +1,71 @@
 import { useState, useEffect } from 'react';
 import { buscarPorUsuario } from '../services/personagemService';
-import {
-  buscarItensPorPersonagem,
-  buscarInventario,
-  listarArmas,
-  equiparItem,
-  deletarItem,
-} from '../services/inventarioService';
-
-const TIPO_ICONS = { ARMA: '⚔️', ARMADURA: '🛡️', POCAO: '🧪', ACESSORIO: '💍', default: '📦' };
+import { buscarInventario, listarArmas, equiparItem } from '../services/inventarioService';
+import './Inventario.css';
 
 export default function Inventario() {
   const usuarioId = localStorage.getItem('usuarioId') || 1;
   const [personagens, setPersonagens] = useState([]);
   const [personagemSel, setPersonagemSel] = useState(null);
-  const [itens, setItens] = useState([]);
   const [inventario, setInventario] = useState(null);
   const [armas, setArmas] = useState([]);
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState('');
   const [showEquipar, setShowEquipar] = useState(false);
-  const [equiparForm, setEquiparForm] = useState({ itemId: '' });
+  const [armaId, setArmaId] = useState('');
 
   useEffect(() => {
-    buscarPorUsuario(usuarioId)
-      .then((r) => setPersonagens(r.data))
-      .catch(() => setErro('Erro ao carregar personagens.'));
-
-    listarArmas()
-      .then((r) => setArmas(r.data))
-      .catch(() => {});
+    buscarPorUsuario(usuarioId).then((r) => setPersonagens(r.data)).catch(() => {});
+    listarArmas().then((r) => setArmas(r.data)).catch(() => {});
   }, []);
 
   useEffect(() => {
     if (!personagemSel) return;
     setLoading(true);
-    setErro('');
-    Promise.all([
-      buscarItensPorPersonagem(personagemSel.id),
-      buscarInventario(personagemSel.id).catch(() => ({ data: null })),
-    ])
-      .then(([itensRes, invRes]) => {
-        setItens(itensRes.data);
-        setInventario(invRes.data);
-      })
-      .catch(() => setErro('Erro ao carregar inventário.'))
+    buscarInventario(personagemSel.id)
+      .then((r) => setInventario(r.data))
+      .catch(() => setInventario(null))
       .finally(() => setLoading(false));
   }, [personagemSel]);
 
+  const recarregar = async () => {
+    if (!personagemSel) return;
+    const r = await buscarInventario(personagemSel.id).catch(() => ({ data: null }));
+    setInventario(r.data);
+  };
+
   const handleEquipar = async (e) => {
     e.preventDefault();
-    if (!personagemSel || !equiparForm.itemId) return;
+    if (!personagemSel || !armaId) return;
     try {
-      await equiparItem({ personagemId: personagemSel.id, itemId: Number(equiparForm.itemId) });
+      await equiparItem({ personagemId: personagemSel.id, armaId: Number(armaId) });
       setShowEquipar(false);
-      setEquiparForm({ itemId: '' });
-      const [itensRes, invRes] = await Promise.all([
-        buscarItensPorPersonagem(personagemSel.id),
-        buscarInventario(personagemSel.id).catch(() => ({ data: null })),
-      ]);
-      setItens(itensRes.data);
-      setInventario(invRes.data);
+      setArmaId('');
+      await recarregar();
     } catch (err) {
-      setErro(err.response?.data || 'Erro ao equipar item.');
+      setErro(err.response?.data || 'Erro ao equipar arma.');
     }
   };
 
-  const handleDeletar = async (id) => {
-    if (!confirm('Remover este item?')) return;
-    try {
-      await deletarItem(id);
-      setItens((prev) => prev.filter((i) => i.id !== id));
-    } catch {
-      setErro('Erro ao remover item.');
-    }
-  };
+  const armaEquipada = inventario?.armaEquipada;
 
   return (
-    <div className="page-container">
-      <div className="page-header">
-        <h1 className="page-title">🎒 Inventário</h1>
+    <div className="pix-main">
+      <div className="pix-page-header">
+        <h1 className="pix-page-title">🎒 INVENTÁRIO</h1>
       </div>
 
-      {erro && <p className="form-error">{erro}</p>}
+      {erro && <div className="pix-erro">{erro}</div>}
 
-      <div className="select-section">
-        <label className="select-label">Selecione um personagem:</label>
-        <div className="personagem-selector">
+      <div style={{ marginBottom: 8 }}>
+        <div className="pix-label" style={{ marginBottom: 8 }}>SELECIONE UM PERSONAGEM:</div>
+        <div className="inv-selector">
           {personagens.map((p) => (
-            <button
-              key={p.id}
-              className={`btn-personagem ${personagemSel?.id === p.id ? 'active' : ''}`}
-              onClick={() => setPersonagemSel(p)}
-            >
-              {p.nome} <span className="nivel-small">Nv.{p.nivel}</span>
+            <button key={p.id}
+              className={`inv-char-btn ${personagemSel?.id === p.id ? 'active' : ''}`}
+              onClick={() => setPersonagemSel(p)}>
+              {p.nome}
+              <span className="inv-char-nivel">NV.{p.nivel}</span>
             </button>
           ))}
         </div>
@@ -101,83 +73,79 @@ export default function Inventario() {
 
       {personagemSel && (
         <>
-          {inventario && (
-            <div className="card inventario-equipado">
-              <h2 className="card-title">🗡️ Equipamento Atual</h2>
-              <div className="equipamento-grid">
-                <div className="equip-slot">
-                  <span className="slot-label">Arma equipada</span>
-                  <span className="slot-value">
-                    {inventario.armaEquipada ? `${inventario.armaEquipada.nome} (${inventario.armaEquipada.danoBase} dano)` : 'Nenhuma'}
+          {loading ? (
+            <div className="pix-loading">⟳ CARREGANDO...</div>
+          ) : (
+            <>
+              <div className="pix-card inv-equip-card">
+                <div className="pix-card-title">🗡️ EQUIPAMENTO ATUAL</div>
+                <div className="inv-equip-slot">
+                  <span className="inv-equip-label">ARMA EQUIPADA</span>
+                  <span className={`inv-equip-value ${armaEquipada ? 'equipped' : ''}`}>
+                    {armaEquipada ? `⚔️ ${armaEquipada.nome} (${armaEquipada.danoBase} DMG)` : '— Nenhuma —'}
                   </span>
                 </div>
               </div>
-            </div>
-          )}
 
-          <div className="inv-actions">
-            <button className="btn-primary" onClick={() => setShowEquipar(!showEquipar)}>
-              {showEquipar ? 'Cancelar' : '⚔️ Equipar Arma'}
-            </button>
-          </div>
+              <div className="inv-actions">
+                <button className="pix-btn" onClick={() => setShowEquipar(!showEquipar)}>
+                  {showEquipar ? '✕ CANCELAR' : '⚔️ EQUIPAR ARMA'}
+                </button>
+              </div>
 
-          {showEquipar && (
-            <div className="card form-card">
-              <h2 className="card-title">Equipar Arma</h2>
-              <form onSubmit={handleEquipar} className="auth-form">
-                <div className="form-group">
-                  <label>Arma disponível</label>
-                  <select
-                    value={equiparForm.itemId}
-                    onChange={(e) => setEquiparForm({ itemId: e.target.value })}
-                    required
-                  >
-                    <option value="">Selecione uma arma...</option>
-                    {armas.map((a) => (
-                      <option key={a.id} value={a.id}>
-                        ⚔️ {a.nome} — {a.danoBase} dano
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <button type="submit" className="btn-primary">Equipar</button>
-              </form>
-            </div>
-          )}
-
-          {loading ? (
-            <div className="loading-state"><span className="spinner">⟳</span> Carregando itens...</div>
-          ) : itens.length === 0 ? (
-            <div className="empty-state">
-              <p>Nenhum item no inventário.</p>
-            </div>
-          ) : (
-            <div className="cards-grid">
-              {itens.map((item) => (
-                <div key={item.id} className="card item-card">
-                  <div className="item-header">
-                    <span className="item-icon">{TIPO_ICONS[item.tipo] || TIPO_ICONS.default}</span>
-                    <div>
-                      <h3 className="item-nome">{item.nome}</h3>
-                      <span className="item-tipo">{item.tipo}</span>
+              {showEquipar && (
+                <div className="pix-card" style={{ maxWidth: 420, marginBottom: 16 }}>
+                  <div className="pix-card-title">EQUIPAR ARMA</div>
+                  <form onSubmit={handleEquipar}>
+                    <div className="pix-field">
+                      <label className="pix-label">ARMA DISPONÍVEL</label>
+                      <select className="pix-select" value={armaId}
+                        onChange={(e) => setArmaId(e.target.value)} required>
+                        <option value="">Selecione uma arma...</option>
+                        {armas.map((a) => (
+                          <option key={a.id} value={a.id}>
+                            ⚔️ {a.nome} — {a.danoBase} DMG
+                          </option>
+                        ))}
+                      </select>
                     </div>
-                  </div>
-                  {item.descricao && <p className="item-descricao">{item.descricao}</p>}
-                  <button
-                    className="btn-danger-sm"
-                    onClick={() => handleDeletar(item.id)}
-                  >
-                    🗑️ Remover
-                  </button>
+                    <button className="pix-btn" type="submit">► EQUIPAR</button>
+                  </form>
                 </div>
-              ))}
-            </div>
+              )}
+
+              {inventario?.armas?.length > 0 && (
+                <div>
+                  <div className="pix-label" style={{ marginBottom: 10 }}>ARMAS NO INVENTÁRIO:</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                    {inventario.armas.map((arma) => (
+                      <div key={arma.id} className="inv-arma-card">
+                        <span className="inv-arma-icon">⚔️</span>
+                        <div>
+                          <span className="inv-arma-nome">{arma.nome}</span>
+                          <span className="inv-arma-dano">{arma.danoBase} DMG</span>
+                        </div>
+                        {armaEquipada?.id === arma.id && (
+                          <span className="inv-arma-equipped-badge">EQUIPADA</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {!inventario?.armas?.length && !armaEquipada && (
+                <div className="pix-empty">
+                  <p>Nenhuma arma no inventário.</p>
+                </div>
+              )}
+            </>
           )}
         </>
       )}
 
       {!personagemSel && personagens.length > 0 && (
-        <div className="empty-state">
+        <div className="pix-empty">
           <p>Selecione um personagem para ver o inventário.</p>
         </div>
       )}

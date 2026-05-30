@@ -1,44 +1,39 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logout } from '../services/authService';
+import './Navbar.css';
+
+const links = [
+  { to: '/personagens', label: 'Personagens', icon: '⚔️' },
+  { to: '/inventario',  label: 'Inventário',  icon: '🎒' },
+  { to: '/batalha',     label: 'Batalha',     icon: '🔥' },
+];
 
 export default function Navbar() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate  = useNavigate();
+  const location  = useLocation();
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
-  const links = [
-    { to: '/personagens', label: 'Personagens', icon: '⚔️' },
-    { to: '/inventario', label: 'Inventário', icon: '🎒' },
-    { to: '/batalha', label: 'Batalha', icon: '🔥' },
-  ];
-
   return (
-    <nav className="navbar">
-      <Link to="/personagens" className="navbar-brand">
-        <span className="brand-icon">☽</span>
-        <span className="brand-name">Chrono Aegis</span>
+    <nav className="pix-navbar">
+      <Link to="/personagens" className="pix-navbar-brand">
+        <span className="pix-navbar-brand-icon">☽</span>
+        CHRONO AEGIS
       </Link>
 
-      <div className="navbar-links">
+      <div className="pix-navbar-links">
         {links.map(({ to, label, icon }) => (
-          <Link
-            key={to}
-            to={to}
-            className={`nav-link ${location.pathname === to ? 'active' : ''}`}
-          >
-            <span className="nav-icon">{icon}</span>
-            {label}
+          <Link key={to} to={to}
+            className={`pix-nav-link ${location.pathname === to ? 'active' : ''}`}>
+            {icon} {label}
           </Link>
         ))}
       </div>
 
-      <button className="btn-logout" onClick={handleLogout}>
-        Sair
-      </button>
+      <button className="pix-logout" onClick={handleLogout}>SAIR</button>
     </nav>
   );
 }
